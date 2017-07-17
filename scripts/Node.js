@@ -1,7 +1,7 @@
 export default class Node {
-  constructor(children) {
-    letter = null;
-    isWord = false;
-    this.children = children;
+  constructor() {
+    this.letter = null;
+    this.isWord = false;
+    this.children = {};
   }
 }
