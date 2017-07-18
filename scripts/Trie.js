@@ -27,37 +27,50 @@ export default class Trie {
       this.wordCount++
     }
 
-    console.log(JSON.stringify(this.root, null, 4))
+    // console.log(JSON.stringify(this.root, null, 4))
   }
 
   count() {
     return this.wordCount
   }
 
-  suggest(data) {
-    let letters = [...data.toLowerCase()];
-    let currentNode = this.root;
-    const suggestions = [];
+  suggest(word) {
+    let letters = [...word]
+    let currNode = this.root;
+    let suggestionsArray = [];
 
-    letters.forEach(letter => {
-      currentNode = currentNode.children[letter];
-    })
-
-    if (!currentNode.children) {
-      suggestions.push(currentNode.value);
+    for (let i = 0; i < letters.length; i++) {
+      currNode = currNode.children[letters[i]]
     }
 
-    while(currentNode.children) {
-      if (currentNode.isWord) {
-        suggestions.push(currentNode.value);
-        currentNode = currentNode.children;
+    //currNode now refers to the last letter in our word
+
+    var traverseTheTrie = (word, currNode) => {
+      let keys = Object.keys(currNode.children);
+      for (let k = 0; k < keys.length; k++) {
+        const child = currNode.children[keys[k]];
+        var newString = word + child.letter;
+        if (child.isWord) {
+          suggestionsArray.push(newString);
+        }
+        traverseTheTrie(newString, child);
       }
     }
 
-    if(currentNode.isWord) {
-      suggestions.push(currentNode.value)
+    if (currNode && currNode.isWord) {
+      suggestionsArray.push(word);
     }
-    return suggestions;
+
+    if (currNode) {
+      traverseTheTrie(word, currNode);
+    }
+    return suggestionsArray;
+  }
+
+  populate(dictionary) {
+    dictionary.forEach(word => {
+      this.insert(word);
+    })
   }
 
   select() {
