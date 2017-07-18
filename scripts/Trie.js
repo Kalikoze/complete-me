@@ -3,32 +3,61 @@ import Node from './Node'
 export default class Trie {
   constructor() {
     this.root = null;
+    this.wordCount = 0;
   }
 
-  insert(data) {
-    const node = new Node()
-
+  insert(word) {
     if (!this.root) {
-      this.root = node;
+      this.root = new Node();
     }
 
-    let letters = [...data];
+    let letters = [...word.toLowerCase()];
     let currentNode = this.root;
 
-    for(let i = 0; i < letters.length; i++) {
-      currentNode.children[letters[i]] = new Node();
-      currentNode.children[letters[i]].letter = letters[i];
-      currentNode = currentNode.children[letters[i]];
+    letters.forEach(letter => {
+      if (!currentNode.children[letter]) {
+        currentNode.children[letter] = new Node(letter);
+      }
+      currentNode = currentNode.children[letter];
+    })
+
+    if (!currentNode.isWord) {
+      currentNode.isWord = true;
+      currentNode.value = word;
+      this.wordCount++
     }
-    console.log(JSON.stringify(this.root, null, 4));
+
+    console.log(JSON.stringify(this.root, null, 4))
   }
 
   count() {
-
+    return this.wordCount
   }
 
-  suggest() {
+  suggest(data) {
+    let letters = [...data.toLowerCase()];
+    let currentNode = this.root;
+    const suggestions = [];
 
+    letters.forEach(letter => {
+      currentNode = currentNode.children[letter];
+    })
+
+    if (!currentNode.children) {
+      suggestions.push(currentNode.value);
+    }
+
+    while(currentNode.children) {
+      if (currentNode.isWord) {
+        suggestions.push(currentNode.value);
+        currentNode = currentNode.children;
+      }
+    }
+
+    if(currentNode.isWord) {
+      suggestions.push(currentNode.value)
+    }
+    return suggestions;
   }
 
   select() {
