@@ -38,7 +38,7 @@ describe('Trie functionality', () => {
 
     })
 
-    it.only('should be able to insert a word and the last letter should have a isWord property of true', () => {
+    it('should be able to insert a word and the last letter should have a isWord property of true', () => {
       completeMe.insert('app');
       completeMe.insert('apple');
 
@@ -140,27 +140,37 @@ describe('Trie functionality', () => {
 
     beforeEach(function () {
       completeMe = new Trie();
-    })
-
-    it.skip('should return all children words of suggestion', () => {
-            completeMe.insert('app')
+      completeMe.insert('app')
       completeMe.insert('apple');
       completeMe.insert('applesauce');
       completeMe.insert('apply');
       completeMe.insert('apt');
       completeMe.insert('cat');
+      completeMe.insert('x-ray')
+    })
 
+    it('should return all children words of suggestion', () => {
       let suggestions = completeMe.suggest('app');
 
       expect(suggestions).to.deep.equal([ 'app', 'apple', 'applesauce', 'apply' ])
+    })
 
-      suggestions = completeMe.suggest('applesauceb');
-
-      expect(suggestions).to.deep.equal([]);
-
-      suggestions = completeMe.suggest('apple');
+    it('should return all children words of suggestion', () => {
+      let suggestions = completeMe.suggest('apple');
 
       expect(suggestions).to.deep.equal(['apple', 'applesauce'])
+    })
+
+    it('should not return children words of suggestion', () => {
+      let suggestions = completeMe.suggest('applesauceb');
+
+      expect(suggestions).to.deep.equal([]);
+    })
+
+    it('should return children words of suggestion with dash in it', () => {
+      let suggestions = completeMe.suggest('x');
+
+      expect(suggestions).to.deep.equal(['x-ray']);
     })
   });
 
