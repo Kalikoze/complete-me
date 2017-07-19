@@ -23,7 +23,6 @@ export default class Trie {
 
     if (!currentNode.isWord) {
       currentNode.isWord = true;
-      currentNode.value = word;
       this.wordCount++
     }
 
@@ -44,27 +43,37 @@ export default class Trie {
     }
 
     //currNode now refers to the last letter in our word
-
     const traverseTheTrie = (word, currNode) => {
       let keys = Object.keys(currNode.children);
       for (let k = 0; k < keys.length; k++) {
         const child = currNode.children[keys[k]];
         var newString = word + child.letter;
         if (child.isWord) {
-          suggestionsArray.push(newString);
+          suggestionsArray.push({name: newString,
+                                frequency: child.frequency,
+                                date: child.date});
         }
         traverseTheTrie(newString, child);
       }
     }
 
     if (currNode && currNode.isWord) {
-      suggestionsArray.push(word);
+      suggestionsArray.push({name: word,
+                            frequency: currNode.frequency,
+                            date: currNode.date});
     }
 
     if (currNode) {
       traverseTheTrie(word, currNode);
     }
-    return suggestionsArray;
+
+    suggestionsArray.sort((a, b) => {
+      return b.frequency - a.frequency || b.date - a.date;
+    })
+
+    return suggestionsArray.map(object => {
+      return object.name;
+    });
   }
 
   populate(dictionary) {
@@ -73,7 +82,14 @@ export default class Trie {
     })
   }
 
-  select() {
+  select(word) {
+    let lettersArray = [...word];
+    let currentNode = this.root;
 
+    lettersArray.forEach(letter => {
+      currentNode = currentNode.children[letter];
+    })
+    currentNode.frequency++
+    currentNode.date = Date.now();
   }
 }
