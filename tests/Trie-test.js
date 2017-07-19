@@ -174,6 +174,19 @@ describe('Trie functionality', () => {
     })
   });
 
+  describe('dictionary populate', () => {
+    let completeMe;
+
+    beforeEach(function () {
+      completeMe = new Trie();
+      completeMe.populate(dictionary);
+    })
+
+    it('should have lots of words after dictionary is populated', () => {
+      expect(completeMe.wordCount).to.equal(234371);
+    })
+  })
+
   describe('select', () => {
     let completeMe;
 
