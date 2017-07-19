@@ -25,8 +25,6 @@ export default class Trie {
       currentNode.isWord = true;
       this.wordCount++
     }
-
-    // console.log(JSON.stringify(this.root, null, 4))
   }
 
   count() {
