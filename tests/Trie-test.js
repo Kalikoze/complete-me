@@ -2,8 +2,8 @@ import { expect } from 'chai';
 import Trie from '../scripts/Trie'
 import Node from '../scripts/Node'
 const text = "/usr/share/dict/words"
-// const fs = require('fs');
-// const dictionary = fs.readFileSync(text).toString().trim().split('\n')
+const fs = require('fs');
+const dictionary = fs.readFileSync(text).toString().trim().split('\n')
 
 describe('Trie functionality', () => {
 
