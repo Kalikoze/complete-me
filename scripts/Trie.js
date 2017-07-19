@@ -45,7 +45,7 @@ export default class Trie {
 
     //currNode now refers to the last letter in our word
 
-    var traverseTheTrie = (word, currNode) => {
+    const traverseTheTrie = (word, currNode) => {
       let keys = Object.keys(currNode.children);
       for (let k = 0; k < keys.length; k++) {
         const child = currNode.children[keys[k]];
