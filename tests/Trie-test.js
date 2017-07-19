@@ -2,8 +2,8 @@ import { expect } from 'chai';
 import Trie from '../scripts/Trie'
 import Node from '../scripts/Node'
 const text = "/usr/share/dict/words"
-// const fs = require('fs');
-// const dictionary = fs.readFileSync(text).toString().trim().split('\n')
+const fs = require('fs');
+const dictionary = fs.readFileSync(text).toString().trim().split('\n')
 
 describe('Trie functionality', () => {
 
@@ -173,6 +173,19 @@ describe('Trie functionality', () => {
       expect(suggestions).to.deep.equal(['x-ray']);
     })
   });
+
+  describe('dictionary populate', () => {
+    let completeMe;
+
+    beforeEach(function () {
+      completeMe = new Trie();
+      completeMe.populate(dictionary);
+    })
+
+    it('should have lots of words after dictionary is populated', () => {
+      expect(completeMe.wordCount).to.equal(234371);
+    })
+  })
 
   describe('select', () => {
     let completeMe;
