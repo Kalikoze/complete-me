@@ -1,0 +1,64 @@
+*,
+*:after,
+*:before {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+body {
+  display: flex;
+}
+
+main {
+  background-color: #060506;
+  display: flex;
+  flex-flow: wrap;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+}
+
+aside {
+  background-color: #9F563A;
+  height: 100vh;
+  width: 50%;
+}
+
+h1 {
+  align-items: center;
+  color: #FFF;
+  display: flex;
+  justify-content: center;
+  font-size: 60px;
+  height: 20%;
+  width: 100%;
+}
+
+form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  height: 50%;
+  width: 100%;
+}
+
+#suggested-word {
+  height: 10%;
+  font-size: 20px;
+  width: 80%;
+}
+
+button.submit {
+  background-color: #DD9A42;
+  border-style: none;
+  color: white;
+  cursor: pointer;
+  font-size: 20px;
+  height: 10%;
+  margin-top: -150px;
+  width: 80%;
+}
