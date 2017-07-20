@@ -62,3 +62,7 @@ button.submit {
   margin-top: -150px;
   width: 80%;
 }
+
+button.suggestions {
+  width: 100%;
+}

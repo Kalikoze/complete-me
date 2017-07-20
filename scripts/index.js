@@ -1,13 +1,37 @@
-import Node from './Node';
 import Trie from './Trie';
+import words from './words'
 
-const suggested = document.querySelector('#suggested-word');
-const button = document.querySelector('.submit');
+const searchTrie = new Trie()
 
-console.log('stuff');
+$(document).ready(populateDictionary)
+$('#suggested-word').on('input', () => {
+  if ($('#suggested-word').val() === '') {
+    $('button').remove();
+  } else {
+    filterList();
+  }
+})
 
-button.addEventListener('click', insertWord);
-
-function insertWord() {
-console.log('stuff')
+function populateDictionary () {
+  searchTrie.populate(words)
 }
+
+function filterList() {
+  let string = $('#suggested-word').val().toLowerCase();
+  let suggestions = searchTrie.suggest(string);
+  $('button').remove();
+
+  for(let i = 0; i < 10; i++) {
+    if (suggestions[i] !== undefined) {
+      $('aside').append(`<button class="suggestions">${suggestions[i]}</button>`)
+    }
+  }
+}
+
+function selectWord(e) {
+  let selected = e.target.innerHTML;
+  searchTrie.select(selected);
+  filterList();
+}
+
+$('aside').on('click', '.suggestions', selectWord);
